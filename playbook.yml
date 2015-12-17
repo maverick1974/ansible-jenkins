@@ -1,0 +1,13 @@
+---
+- hosts: all
+  sudo: true
+  pre_tasks:
+    - name: update
+      apt: update_cache=yes
+      when: ansible_os_family == 'Debian'
+    - name: install curl
+      apt: name=curl state=present
+      when: ansible_os_family == 'Debian'
+  roles:
+    - java
+    - { role: jenkins, jenkins_hostname: 'localhost' }
